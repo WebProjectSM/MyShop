@@ -19,8 +19,8 @@
                 /*setValues();*/
                 window.location.href = "update.html";
             }
-       
-             
+
+            console.log("aa")
           
 
             
