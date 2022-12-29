@@ -16,11 +16,24 @@ namespace myWebApp.Controllers.wwwroot
         {
             _bl = bl;
         }
-       
+
 
         // GET: api/<HomeController>
+        
+
+        //public async Task<IEnumerable<Product>> Get()
+        //{
+        //    return await _bl.getAllProducts();
+
+        //}
+        
         [HttpGet]
-       
+        
+        public async Task<List<Product>> Get([FromQuery]int position, [FromQuery]int skip,[FromQuery] string? desc, [FromQuery]int? minPrice,[FromQuery] int? maxPrice, [FromQuery]int?[] categories)
+        {
+            List<Product> products = await _bl.getProducts(position, skip, desc, minPrice, maxPrice, categories);
+            return products;
+        }
 
         // GET api/<HomeController>/5
         [HttpGet("{id}")]
@@ -33,6 +46,10 @@ namespace myWebApp.Controllers.wwwroot
             return null;
 
         }
+        // GET api/<HomeController>/5
+        
+     
+        
 
         // POST api/<HomeController>
         [HttpPost]

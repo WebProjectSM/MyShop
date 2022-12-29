@@ -9,6 +9,10 @@ builder.Services.AddScoped<IUserBL,UserBL>();
 builder.Services.AddScoped<IuserDL, userDL>();
 builder.Services.AddScoped<IProductBL, ProductBL>();
 builder.Services.AddScoped<IProductDL, ProductDL>();
+builder.Services.AddScoped<ICategoryBL, CategoryBL>();
+builder.Services.AddScoped<ICategoryDL, CategoryDL>();
+builder.Services.AddScoped<IOrderBL, OrderBL>();
+builder.Services.AddScoped<IOrderDL, OrderDL>();
 
 
 builder.Services.AddEndpointsApiExplorer();

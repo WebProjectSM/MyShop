@@ -30,17 +30,17 @@ namespace myWebApp.wwwroot
 
         // POST api/<checkPasswordController>
         [HttpPost]
-        public ActionResult<int> Post([FromBody] string password)
-        {
-            {
-                var pass_ok = _bl.Check_password(password);
-                if (pass_ok != null)
-                    return pass_ok;
-                else
-                    return StatusCode(404);
-            }
+        //public ActionResult<int> Post([FromBody] string password)
+        //{
+        //    {
+        //        var pass_ok = _bl.Check_password(password);
+        //        if (pass_ok != null)
+        //            return pass_ok;
+        //        else
+        //            return StatusCode(404);
+        //    }
 
-        }
+        //}
 
         // PUT api/<checkPasswordController>/5
         [HttpPut("{id}")]

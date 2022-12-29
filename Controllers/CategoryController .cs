@@ -20,7 +20,11 @@ namespace myWebApp.Controllers.wwwroot
 
         // GET: api/<HomeController>
         [HttpGet]
-       
+        public async Task<IEnumerable<Category>> Get()
+        {
+            return await _bl.getAllCategories();
+        }
+
 
         // GET api/<HomeController>/5
         [HttpGet("{id}")]
