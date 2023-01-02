@@ -3,7 +3,7 @@
     products = [];
 categories = [];
 window.addEventListener("load", GetProduct("https://localhost:44380/api/Product"));
-    window.addEventListener("load", GetCategory());
+window.addEventListener("load", GetCategory());
 
     async function GetProduct(url)
     {
@@ -18,25 +18,29 @@ window.addEventListener("load", GetProduct("https://localhost:44380/api/Product"
             else {
                 console.log("התחבר")
                 products = await res.json();
-                drawProducts()
+                sendProduct()
             }
         
 
+}
+function sendProduct() {
+    for (var i = 0; i < products.length; i++) {
+        drawProducts(products[i]);
     }
-    function drawProducts(){
-        for (var i = 0; i < products.length; i++) {
-            var temp = document.getElementsByTagName("template")[0];
+    }
+
+    function drawProducts(product){
+       
+        var temp = document.getElementById("temp-card");
             var clon = temp.content.cloneNode(true);
-            clon.querySelector("img").src = products[i].image;
-            clon.querySelector("h1").innerText = products[i].productName;
-            clon.querySelector(".price").innerText = products[i].price;
-            var tmp = products[i];
-            clon.querySelector("button").addEventListener("click",() => addProduct(tmp))
-            clon.querySelector(".description").innerText = products[i].description;
+            clon.querySelector("img").src = product.image;
+            clon.querySelector("h1").innerText = product.productName;
+            clon.querySelector(".price").innerText = product.price;
+            clon.querySelector("button").addEventListener("click",() => addProduct(product))
+            clon.querySelector(".description").innerText = product.description;
             document.body.appendChild(clon);
+
             
-            
-            }
 }
 
 async function GetCategory() {
