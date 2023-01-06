@@ -1,10 +1,16 @@
 using BusinessLayer;
 using DataLayer;
 using Entities;
+using Microsoft.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<bagsContext>(optios => optios.UseSqlServer("Data Source=SRV2\\PUPILS;Initial Catalog=bags;Integrated Security=True"));
+var str = builder.Configuration.GetConnectionString("school");
+builder.Services.AddDbContext<bagsContext>(optios => optios.UseSqlServer(str));
+builder.Services.AddDbContext<bagsContext>();
+
 builder.Services.AddScoped<IUserBL,UserBL>();
 builder.Services.AddScoped<IuserDL, userDL>();
 builder.Services.AddScoped<IProductBL, ProductBL>();
@@ -17,7 +23,7 @@ builder.Services.AddScoped<IOrderDL, OrderDL>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Host.UseNLog();
 // Add services to the container.
 
 builder.Services.AddControllers();

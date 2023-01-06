@@ -2,12 +2,13 @@
     async function logIn(){
         const pass = document.getElementById("password").value;
         const name = document.getElementById("name").value;
-        const res = await fetch(`https://localhost:44380/api/Home/?name=${name}&password=${pass}`);
+        let res = await fetch(`https://localhost:44380/api/user?password=${pass}&name=${name}`);
         
             
-        if (!res.ok)
+        if (!res.ok) { 
             throw Error(`your connect is fail ${res.status} ,try again`);
-        return;
+            
+        }
         if (res.status == 204)
             alert("you are not exist, for sigin press new user");
         else {
@@ -28,18 +29,17 @@
 } 
 async function singIn() {
 
-
+    
     const user = {
-        "Id": 0,
-        "Password": document.getElementById("password").value,
-        "Email": document.getElementById("mail").value,
-        "Phone": document.getElementById("phone").value,
+        "UserId": 0,        
+        "Email": document.getElementById("userName").value,        
         "FirstName": document.getElementById("fname").value,
-        "LastName": document.getElementById("lname").value
+        "LastName": document.getElementById("lname").value,
+        "Password": document.getElementById("password").value,
     }
 
 
-    const res = await fetch("https://localhost:44380/api/Home", {
+    const res = await fetch("https://localhost:44380/api/user", {
 
         headers: { "content-Type": "application/json" },
         method: 'POST',
@@ -51,9 +51,10 @@ async function singIn() {
 
 
     const data = await res.json;
-    sessionStorage.setItem('currentUser', JSON.stringify(data));
+    if(data)
+    //sessionStorage.setItem('currentUser', JSON.stringify(data));
    /* setValues()*/;
-    window.location.href = "update.html";
+    window.location.href = "login.html";
 }
 
     function setValues() {
@@ -62,10 +63,8 @@ async function singIn() {
 
 
         console.log(user['userName']);
-        const userName = user["userName"] ;
-        const userCod = user["cod"];
-        const userMail = user["mail"];
-        const userPhone = user["phone"];
+        const userName = user["email"] ;
+        const userCod = user["password"];            
         const userFname = user["firstName"];
         const userLname = user["lastName"];
 
@@ -78,12 +77,10 @@ async function singIn() {
         b.setAttribute("value", userFname);
         let c = document.getElementById("ln");
         c.setAttribute("value", userLname);
-        let d = document.getElementById("email");
-        d.setAttribute("value", userMail);
+        
         let e = document.getElementById("pass");
         e.setAttribute("value", userCod);
-        let f = document.getElementById("ph");
-        f.setAttribute("value", userPhone);
+        
         
 
 
@@ -106,34 +103,33 @@ async function singIn() {
 
 
 async function update() {
-    const tmpId = sessionStorage.getItem('currentUser');
-    const id = JSON.parse(tmpId);
-    const realId = id["id"];
+    const tmpUser = sessionStorage.getItem('currentUser');
+    const id = JSON.parse(tmpUser);
+    const realId = id["userId"];
 
 
     const user = {
-        "Id": realId,
-         "Password": document.getElementById("pass").value,
-        "Email": document.getElementById("email").value,
-        "Phone": document.getElementById("ph").value,
-
+        "UserId": realId,        
+        "Email": document.getElementById("email").value,       
         "FirstName": document.getElementById("fn").value,
-        "LastName": document.getElementById("ln").value
+        "LastName": document.getElementById("ln").value,
+        "Password": document.getElementById("pass").value
     }
 
 
-    const res = await fetch(`https://localhost:44380/Api/Home/${realId}`, {
+    //const res = await fetch(`https://localhost:44380/Api/user/${realId}`, {
 
-        headers: { "content-Type": "application/json" },
-        method: 'PUT',
-        body: JSON.stringify(user)
-    });
+    //    headers: { "content-Type": "application/json" },
+    //    method: 'PUT',
+    //    body: JSON.stringify(user)
+    //});
 
-    if (res.ok) {
-        alert("your details were update")
-    }
-    
-
+    //if (res.ok) {
+    //    alert("your details were update")
+    //    
+    //}
+    window.location.href="order.html";
+  
 }
 async function  check (){
  password = document.getElementById("password").value;

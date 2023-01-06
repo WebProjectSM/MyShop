@@ -1,7 +1,8 @@
 ﻿
-    
+     items = [];
     products = [];
 categories = [];
+num = 0;
 window.addEventListener("load", GetProduct("https://localhost:44380/api/Product"));
 window.addEventListener("load", GetCategory());
 
@@ -20,7 +21,7 @@ window.addEventListener("load", GetCategory());
                 products = await res.json();
                 sendProduct()
             }
-        
+        setNumPtoducts();
 
 }
 function sendProduct() {
@@ -123,12 +124,22 @@ function removeProducts()
     { 
         document.body.removeChild(prods[i]);
     }
-          
+  
 }
-var items = [];
-function addProduct(prod) {
-    items.push(prod);
+
+function addProduct(prod) {   
+    var prev = JSON.parse(sessionStorage.getItem("prod"));
+    if (prev!=null) { 
+        items = prev;
+    }
+       items.push(prod);
     sessionStorage.setItem("prod", JSON.stringify(items));
+    num = items.length;
+    setNumPtoducts()
+}
+
+function setNumPtoducts(){
+    document.getElementById("ItemsCountText").innerText = num;
 }
 
 

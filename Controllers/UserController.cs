@@ -12,23 +12,28 @@ namespace myWebApp.Controllers.wwwroot
     public class UserController : ControllerBase
     {
         readonly IUserBL _bl;
-        public UserController(IUserBL bl)
+        public readonly ILogger<UserController> _logger;
+        public UserController(IUserBL bl,ILogger<UserController> logger)
         {
             _bl = bl;
+            _logger =logger;
         }
 
 
         // GET: api/<HomeController>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] string password, string name)
+        public async Task<ActionResult<User>> Get([FromQuery] string password, string name)
         {
+           
+            _logger.LogInformation($"the user is {name}");
 
-            User user = await _bl.getUser(password, name);
+          User user = await _bl.getUser(password, name);
             if (user != null)
             {
-                return StatusCode(200);
-
+                return Ok(user);
+            
             }
+            _logger.LogError("erro");
             return StatusCode(204);
 
         }
@@ -51,7 +56,10 @@ namespace myWebApp.Controllers.wwwroot
         {
            User user = await _bl.addUser(value);
             //return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
-            return user;
+            if (user != null)
+
+                return Ok(user);
+            else return StatusCode(204);
 
         }
 

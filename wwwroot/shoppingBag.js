@@ -1,7 +1,8 @@
 ﻿
-
+var userId;
 products = [];
 categories = [];
+tmpProduct = [];
 window.addEventListener("load", GetProduct());
 
 
@@ -46,32 +47,8 @@ function drawProducts(product) {
     }
 
 
-async function GetCategory() {
-
-    var res = await fetch('https://localhost:44380/api/Category');
-    if (!res.ok)
-        console.log('שגיאה בחיבור לנתונים');
-    else
-        if (res.status == 204)
-            console.log('אין נתונים');
-        else {
-            console.log("התחבר")
-            categories = await res.json();
-            drawCategory()
-        }
 
 
-}
-function drawCategory() {
-    for (var i = 0; i < categories.length; i++) {
-        var temp = document.getElementById("temp-category");
-        var clon = temp.content.cloneNode(true);
-        clon.querySelector(".opt").id = categories[i].categoryId;
-        clon.querySelector(".opt").value = categories[i].categoryId;
-        clon.querySelector(".OptionName").innerText = categories[i].categoryName;
-        document.getElementById("categoryList").appendChild(clon);
-    }
-}
 
 
 function removeProduct(prod) {
@@ -79,15 +56,30 @@ function removeProduct(prod) {
     var ind = products.findIndex((e, i) => e.productId == prod.productId);
     //products.removeItem(i)
     products.splice(ind,1);
-    sessionStorage.setItem("prod",JSON.stringify(products));
+    sessionStorage.setItem("prod", JSON.stringify(products) );
     var prods = document.getElementsByClassName("item-row");
     for (var i = prods.length - 1; i >= 0; i--) {
         document.body.removeChild(prods[i]);
 
     }
     GetProduct();
+}
 
-
+function saveBaskate()
+{
+    tmpProduct = products;
+    window.location.href = "product.html?fromShoppingBag=1";
 }
 
 
+function placeOrder() {
+    var user = sessionStorage.getItem("currentUser");
+    if (!user)
+       window.location.href = "Login.html";
+    
+    else {   
+        userId = user['userId']
+    window.location.href = "order.html";
+}
+    
+}
