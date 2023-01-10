@@ -1,4 +1,5 @@
 ﻿using BusinessLayer;
+using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -32,6 +33,8 @@ namespace myWebApp.Controllers.wwwroot
         public async Task<List<Product>> Get([FromQuery]int position, [FromQuery]int skip,[FromQuery] string? desc, [FromQuery]int? minPrice,[FromQuery] int? maxPrice, [FromQuery]int?[] categories)
         {
             List<Product> products = await _bl.getProducts(position, skip, desc, minPrice, maxPrice, categories);
+            List<ProductDTO> prodDTO;
+            AutoMapper.Mapper.CreateMap<products, prodDTO>();
             return products;
         }
 

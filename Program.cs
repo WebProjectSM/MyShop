@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var str = builder.Configuration.GetConnectionString("school");
 builder.Services.AddDbContext<bagsContext>(optios => optios.UseSqlServer(str));
 builder.Services.AddDbContext<bagsContext>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUserBL,UserBL>();
 builder.Services.AddScoped<IuserDL, userDL>();
@@ -19,7 +20,6 @@ builder.Services.AddScoped<ICategoryBL, CategoryBL>();
 builder.Services.AddScoped<ICategoryDL, CategoryDL>();
 builder.Services.AddScoped<IOrderBL, OrderBL>();
 builder.Services.AddScoped<IOrderDL, OrderDL>();
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

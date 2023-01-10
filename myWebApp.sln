@@ -5,11 +5,13 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myWebApp", "myWebApp.csproj", "{E0267CBD-1C0A-47E1-8604-3A16CEEF8794}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "..\DataLayer\DataLayer.csproj", "{3DA862A0-60E9-4A83-ACB2-DC3965785C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "..\DataLayer\DataLayer.csproj", "{3DA862A0-60E9-4A83-ACB2-DC3965785C89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "..\Entities\Entities.csproj", "{56D35EC1-5AF3-4E33-8AF4-3CFD63556B18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "..\Entities\Entities.csproj", "{56D35EC1-5AF3-4E33-8AF4-3CFD63556B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "..\BusinessLayer\BusinessLayer.csproj", "{1B37A3B8-3F65-4EA8-80D3-8EB741C4F804}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "..\BusinessLayer\BusinessLayer.csproj", "{1B37A3B8-3F65-4EA8-80D3-8EB741C4F804}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "..\DTO\DTO.csproj", "{A8FA3C28-C4CC-4C4B-BF96-05CA28AE9078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1B37A3B8-3F65-4EA8-80D3-8EB741C4F804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B37A3B8-3F65-4EA8-80D3-8EB741C4F804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B37A3B8-3F65-4EA8-80D3-8EB741C4F804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8FA3C28-C4CC-4C4B-BF96-05CA28AE9078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8FA3C28-C4CC-4C4B-BF96-05CA28AE9078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8FA3C28-C4CC-4C4B-BF96-05CA28AE9078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8FA3C28-C4CC-4C4B-BF96-05CA28AE9078}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
