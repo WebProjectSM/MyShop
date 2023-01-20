@@ -1,4 +1,6 @@
-﻿using BusinessLayer;
+﻿using AutoMapper;
+using BusinessLayer;
+using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -12,59 +14,38 @@ namespace myWebApp.Controllers.wwwroot
     public class CategoryController : ControllerBase
     {
         readonly ICategoryBL _bl;
-        public CategoryController(ICategoryBL bl)
+        readonly IMapper _mapper;
+        public CategoryController(ICategoryBL bl, IMapper mapper)
         {
             _bl = bl;
+            _mapper = mapper;
         }
        
 
         // GET: api/<HomeController>
         [HttpGet]
-        public async Task<IEnumerable<Category>> Get()
+        public async Task<IEnumerable<CategoryDTO>> Get()
         {
-            return await _bl.getAllCategories();
+            IEnumerable<Category> categories= await _bl.getAllCategories();
+            IEnumerable<CategoryDTO> categoriesDTO=_mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
+            return categoriesDTO;
         }
 
 
         // GET api/<HomeController>/5
         [HttpGet("{id}")]
-        public async Task<Category> Get(int id)
+        public async Task<CategoryDTO> Get(int id)
         {
            
             Category Category =await _bl.getCategoryById(id);
-            if (Category != null)
-                return Category;
+           CategoryDTO categoriesDTO = _mapper.Map<Category, CategoryDTO>(Category);
+          if (categoriesDTO != null)
+              return categoriesDTO;
+          
             return null;
 
         }
 
-        // POST api/<HomeController>
-        [HttpPost]
-        public async Task<ActionResult<Category>> Post([FromBody] Category value)
-        {
-           Category Category = await _bl.addCategory(value);
-            //return CreatedAtAction(nameof(Get), new { id = Category.CategoryId }, Category);
-            return Category;
-
-        }
-
-        // PUT api/<HomeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Category CategoryToUpdate)
-        {
-            _bl.update(id, CategoryToUpdate);
-
-
-
-        }
-       
       
-
-        // DELETE api/<HomeController>/50
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-
-        }
     }
 }

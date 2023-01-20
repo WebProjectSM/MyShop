@@ -1,4 +1,6 @@
-﻿using BusinessLayer;
+﻿using AutoMapper;
+using BusinessLayer;
+using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -12,55 +14,29 @@ namespace myWebApp.Controllers.wwwroot
     public class OrderController : ControllerBase
     {
         readonly IOrderBL _bl;
-        public OrderController(IOrderBL bl)
+        readonly IMapper _mapper;
+        public OrderController(IOrderBL bl, IMapper mapper)
         {
             _bl = bl;
+            _mapper = mapper;
         }
-       
 
-        // GET: api/<HomeController>
-        [HttpGet]
-       
 
-        // GET api/<HomeController>/5
-        [HttpGet("{id}")]
-        public async Task<Order> Get(int id)
-        {
-           
-            Order Order =await _bl.getOrderById(id);
-            if (Order != null)
-                return Order;
-            return null;
 
-        }
 
         // POST api/<HomeController>
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] Order value)
+        public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO orderDto)
         {
-           Order Order = await _bl.addOrder(value);
+            Order order = _mapper.Map<OrderDTO, Order>(orderDto);
+            Order Order = await _bl.addOrder(order);
             //return CreatedAtAction(nameof(Get), new { id = Order.OrderId }, Order);
-            return Order;
+            OrderDTO ordDto = _mapper.Map<Order, OrderDTO>(Order);
+            return ordDto;
 
         }
 
-        // PUT api/<HomeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Order OrderToUpdate)
-        {
-            _bl.update(id, OrderToUpdate);
-
-
-
-        }
        
-      
 
-        // DELETE api/<HomeController>/50
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-
-        }
-    }
-}
+       }
+    } 

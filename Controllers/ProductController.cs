@@ -1,9 +1,10 @@
-﻿using BusinessLayer;
+﻿using AutoMapper;
+using BusinessLayer;
 using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-
+using DataLayer;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace myWebApp.Controllers.wwwroot
@@ -13,9 +14,15 @@ namespace myWebApp.Controllers.wwwroot
     public class ProductController : ControllerBase
     {
         readonly IProductBL _bl;
-        public ProductController(IProductBL bl)
+         readonly IMapper _mapper;
+        readonly IRatingDL _rating;
+        public HttpContext context;
+        public ProductController(IProductBL bl, IMapper mapper,IRatingDL rating )
         {
             _bl = bl;
+            _mapper = mapper;
+            
+         
         }
 
 
@@ -30,57 +37,29 @@ namespace myWebApp.Controllers.wwwroot
         
         [HttpGet]
         
-        public async Task<List<Product>> Get([FromQuery]int position, [FromQuery]int skip,[FromQuery] string? desc, [FromQuery]int? minPrice,[FromQuery] int? maxPrice, [FromQuery]int?[] categories)
+        public async Task<List<ProductDTO>> Get([FromQuery]int position, [FromQuery]int skip,[FromQuery] string? desc, [FromQuery]int? minPrice,[FromQuery] int? maxPrice, [FromQuery]int?[] categories)
         {
+           
+           
             List<Product> products = await _bl.getProducts(position, skip, desc, minPrice, maxPrice, categories);
-            List<ProductDTO> prodDTO;
-            AutoMapper.Mapper.CreateMap<products, prodDTO>();
-            return products;
+            List<ProductDTO> prodDTO = _mapper.Map<List<Product>,List<ProductDTO>>(products);
+            return prodDTO;
+           
+         
         }
 
         // GET api/<HomeController>/5
         [HttpGet("{id}")]
-        public async Task<Product> Get(int id)
+        public async Task<ProductDTO> Get(int id)
         {
            
-            Product Product =await _bl.getProductById(id);
-            if (Product != null)
-                return Product;
+            Product product =await _bl.getProductById(id);
+           ProductDTO prodDTO = _mapper.Map<Product,ProductDTO>(product);
+            if (prodDTO != null)
+                return prodDTO;
             return null;
 
         }
-        // GET api/<HomeController>/5
-        
-     
-        
-
-        // POST api/<HomeController>
-        [HttpPost]
-        public async Task<ActionResult<Product>> Post([FromBody] Product value)
-        {
-           Product Product = await _bl.addProduct(value);
-            //return CreatedAtAction(nameof(Get), new { id = Product.ProductId }, Product);
-            return Product;
-
-        }
-
-        // PUT api/<HomeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Product ProductToUpdate)
-        {
-            _bl.update(id, ProductToUpdate);
-
-
-
-        }
        
-      
-
-        // DELETE api/<HomeController>/50
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-
-        }
     }
 }
